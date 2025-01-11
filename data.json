@@ -1,7 +1,7 @@
 {
     "sections": [
       {
-        "name": "博客",
+        "name": "alist",
         "links": [
           { "name": "Netlify", "url": "https://netlify-blog.acofork.us.kg/" },
           { "name": "Cloudflare Pages", "url": "https://blog.acofork.us.kg" },
