@@ -1,15 +1,10 @@
 {
     "sections": [
       {
-        "name": "博客",
+        "name": "alist",
         "links": [
-          { "name": "Netlify", "url": "https://netlify-blog.acofork.us.kg/" },
-          { "name": "Cloudflare Pages", "url": "https://blog.acofork.us.kg" },
-          { "name": "Fleek", "url": "https://fleek-blog.acofork.us.kg" },
-          { "name": "Vercel", "url": "https://vercel-blog.acofork.us.kg" },
-          { "name": "Github Pages", "url": "https://github-blog.acofork.us.kg" },
-          { "name": "Render", "url": "https://render-blog.acofork.us.kg" },
-          { "name": "Surge", "url": "https://acofork-blog.surge.sh" }
+          { "name": "直接访问", "url": "https://ali.mcxlmcn.us.kg/" },
+          { "name": "Cloudflare Pages", "url": "https://alist.mcxlmcn.us.kg/" },
         ]
       },
     ]
