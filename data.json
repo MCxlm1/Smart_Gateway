@@ -3,8 +3,8 @@
       {
         "name": "alist",
         "links": [
-          { "name": "直接访问", "url": "https://ali.mcxlmcn.us.kg/" },
-          { "name": "Cloudflare Pages", "url": "https://alist.mcxlmcn.us.kg/" }
+          { "name": "源站", "url": "https://ali.mcxlmcn.us.kg/" },
+          { "name": "Cloudflare Pages", "url": "https://ali-c.mcxlmcn.us.kg/" }
         ]
       }
     ]
