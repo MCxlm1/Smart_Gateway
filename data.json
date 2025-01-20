@@ -4,7 +4,7 @@
         "name": "alist",
         "links": [
           { "name": "源站", "url": "https://ali.mcxlmcn.us.kg/" },
-         { "name": "gcore（源站）", "url": "http://gcore.ali.mcxlmcn.us.kg/" },
+         { "name": "fleek", "url": "https://fl.ali.mcxlmcn.us.kg/" },
           { "name": "Cloudflare Pages", "url": "https://ali-c.mcxlmcn.us.kg/" }
         ]
       }
