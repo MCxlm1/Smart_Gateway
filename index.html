@@ -4,61 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MCxlm1的alist</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* 确保内容从顶部开始 */
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0; /* 设置背景颜色 */
+    }
+    .container {
+      background-color: #ffffff; /* 设置白色背景 */
+      padding: 20px; /* 添加内边距 */
+      border-radius: 10px; /* 添加圆角 */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+      margin-top: 20px; /* 添加顶部外边距 */
+      width: 80%; /* 设置宽度 */
+      max-width: 800px; /* 设置最大宽度 */
+    }
+    header {
+      width: 100%;
+      text-align: center;
+      margin-top: 0; /* 确保标题在页面最上面 */
+    }
+    main {
+      text-align: center;
+    }
+    p {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 id="title">正在为您挑选最优路线</h1>
-  </header>
-  <main id="content">
-    <p class="loading">加载中...</p>
-  </main>
-  <script defer src="/dist/index.min.js" data-base-url="https://jsqw.mcxlmcn.us.kg"></script>
+  <div class="container">
+    <header>
+      <h1 id="title">正在为您挑选最优路线</h1>
+    </header>
+    <main id="content">
+      <p class="loading">加载中...</p>
+    </main>
+  </div>
   <p>本页访问人次:<span id="page_pv"></span> 本页访问人数:<span id="page_uv"></span></p>
+  <script defer src="/dist/index.min.js" data-base-url="https://jsqw.mcxlmcn.us.kg"></script>
 
-<script>
-  // 设置一个阈值，如果某个链接响应时间低于该值就立刻跳转
-  const speedThreshold = 200; // 单位: 毫秒
-  let fastestLinks = []; // 存储所有链接的测速结果
-  let autoRedirectEnabled = true; // 控制自动跳转的开关
-  let hasShownDisableMessage = false; // 控制是否已经显示过提示信息
+  <script>
+    // 设置一个阈值，如果某个链接响应时间低于该值就立刻跳转
+    const speedThreshold = 200; // 单位: 毫秒
+    let fastestLinks = []; // 存储所有链接的测速结果
+    let autoRedirectEnabled = true; // 控制自动跳转的开关
+    let hasShownDisableMessage = false; // 控制是否已经显示过提示信息
 
-  // 递归判断点击是否为空白区域
-  function isClickOnEmptyArea(element) {
-    // 排除具体的内容区域和链接
-    const contentArea = document.getElementById('content');
-    const isInContentArea = contentArea.contains(element);
-    const isLink = element.tagName.toLowerCase() === 'a';
+    // 递归判断点击是否为空白区域
+    function isClickOnEmptyArea(element) {
+      // 排除具体的内容区域和链接
+      const contentArea = document.getElementById('content');
+      const isInContentArea = contentArea.contains(element);
+      const isLink = element.tagName.toLowerCase() === 'a';
 
-    // 如果点击在内容区域或链接上，不认为是空白区域
-    if (isInContentArea || isLink) {
-      return false;
+      // 如果点击在内容区域或链接上，不认为是空白区域
+      if (isInContentArea || isLink) {
+        return false;
+      }
+
+      // 点击在 body 或 html 上
+      return element === document.body || element === document.documentElement;
     }
 
-    // 点击在 body 或 html 上
-    return element === document.body || element === document.documentElement;
-  }
+    // 监听点击事件，判断是否点击了空白区域
+    document.documentElement.addEventListener('click', function(event) {
+      if (isClickOnEmptyArea(event.target) && !hasShownDisableMessage) {
+        autoRedirectEnabled = false; // 禁用自动跳转
+        showAutoRedirectDisabledMessage(); // 显示提示信息
+      }
+    });
 
-  // 监听点击事件，判断是否点击了空白区域
-  document.documentElement.addEventListener('click', function(event) {
-    if (isClickOnEmptyArea(event.target) && !hasShownDisableMessage) {
-      autoRedirectEnabled = false; // 禁用自动跳转
-      showAutoRedirectDisabledMessage(); // 显示提示信息
+    // 显示自动跳转已关闭的提示
+    function showAutoRedirectDisabledMessage() {
+      // 创建提示元素
+      const message = document.createElement('p');
+      message.innerText = '自动跳转已关闭，刷新页面可开启。';
+      document.body.appendChild(message); // 将提示信息添加到页面的最后
+
+      // 标记已显示提示信息
+      hasShownDisableMessage = true;
     }
-  });
-
-  // 显示自动跳转已关闭的提示
-  function showAutoRedirectDisabledMessage() {
-    // 创建提示元素
-    const message = document.createElement('p');
-    message.innerText = '自动跳转已关闭，刷新页面可开启。';
-
-    // 将提示信息添加到页面的最后
-    document.body.appendChild(message);
-
-    // 标记已显示提示信息
-    hasShownDisableMessage = true;
-  }
-  
+    
     // 获取数据
     async function fetchNavigationData() {
       try {
@@ -71,7 +102,7 @@
         document.getElementById('content').innerHTML = '<p>导航数据加载失败，请稍后再试。</p>';
       }
     }
-  
+    
     // 创建元素
     function createElement(tag, className, textContent = '') {
       const element = document.createElement(tag);
@@ -79,7 +110,7 @@
       if (textContent) element.textContent = textContent;
       return element;
     }
-  
+    
     // 测速函数
     async function testSpeed(url, element) {
       const startTime = performance.now();
@@ -88,10 +119,10 @@
         const endTime = performance.now();
         const duration = (endTime - startTime).toFixed(2);
         element.innerText = `${duration} ms`;
-  
+    
         // 保存测速结果
         fastestLinks.push({ url, duration: parseFloat(duration) });
-  
+    
         // 如果自动跳转被启用且响应时间低于阈值，立刻跳转
         if (autoRedirectEnabled && parseFloat(duration) < speedThreshold) {
           const currentUrlParams = window.location.search; // 获取当前页面的查询参数
@@ -103,7 +134,7 @@
         element.innerText = '无法访问';
       }
     }
-  
+    
     // 为跳转 URL 添加路径和查询参数
     function appendQueryParams(url, path, queryParams) {
       const urlObject = new URL(url); // 创建 URL 对象
@@ -113,39 +144,39 @@
       }
       return urlObject.toString(); // 返回带有路径和查询参数的完整 URL
     }
-  
+    
     // 渲染博客数据并测速
     async function renderNavigation(data) {
       const content = document.getElementById('content');
       content.innerHTML = ''; // 清空加载动画
-  
+    
       const section = data.sections.find(sec => sec.name === 'alist'); // 找到博客部分
       if (!section) {
         content.innerHTML = '<p>没有找到博客部分</p>';
         return;
       }
-  
+    
       const promises = [];
       const list = createElement('ul');
-  
+    
       section.links.forEach(link => {
         const listItem = createElement('li');
         const anchor = createElement('a', '', link.name);
         anchor.href = link.url + '?t=' + new Date().getTime(); // 加上时间戳避免缓存
         anchor.target = '_blank';
         anchor.rel = 'noopener noreferrer';
-  
+    
         const speedSpan = createElement('span', '', '测试中...');
         listItem.appendChild(anchor);
         listItem.appendChild(speedSpan);
         list.appendChild(listItem);
-  
+    
         promises.push(testSpeed(link.url, speedSpan));
       });
-  
+    
       content.appendChild(list);
       await Promise.all(promises); // 等待所有测速完成
-  
+    
       // 排序所有链接并跳转到最快的一个
       if (fastestLinks.length > 0 && autoRedirectEnabled) {
         fastestLinks.sort((a, b) => a.duration - b.duration); // 按响应时间排序
@@ -155,7 +186,7 @@
         window.location.href = appendQueryParams(fastestLink, currentPath, currentUrlParams); // 跳转并附加路径和查询参数
       }
     }
-  
+    
     fetchNavigationData();
   </script>
 </body>
